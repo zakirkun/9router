@@ -110,6 +110,7 @@ export class DefaultExecutor extends BaseExecutor {
           if (!headers["anthropic-version"]) {
             headers["anthropic-version"] = "2023-06-01";
           }
+          delete headers["Anthropic-Version"]; // prevent Title-Case duplicate
         } else if (this.provider === "gitlab") {
           // GitLab Duo uses Bearer token (PAT with ai_features scope, or OAuth access token)
           headers["Authorization"] = `Bearer ${credentials.apiKey || credentials.accessToken}`;
@@ -126,6 +127,7 @@ export class DefaultExecutor extends BaseExecutor {
           // Generic claude-format provider (e.g. agentrouter): x-api-key + anthropic-version
           headers["x-api-key"] = credentials.apiKey || credentials.accessToken;
           if (!headers["anthropic-version"]) headers["anthropic-version"] = "2023-06-01";
+          delete headers["Anthropic-Version"]; // prevent Title-Case duplicate
         } else {
           headers["Authorization"] = `Bearer ${credentials.apiKey || credentials.accessToken}`;
         }
